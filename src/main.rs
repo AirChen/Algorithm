@@ -25,5 +25,5 @@ fn main() {
     println!("{}^{} = {}", fv, fd, powf(fv, fd));
 
     let s = 16;
-    println!("sqrt({}) is {}", s, sqrt_bisection(s as f64));
+    println!("sqrt({}) is {}", s, sqrt(s as f32));
 }

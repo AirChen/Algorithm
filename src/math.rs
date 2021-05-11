@@ -28,31 +28,20 @@ pub fn powf(base: f64, idx: u16) -> f64 {
 }
 
 // https://diducoder.com/sotry-about-sqrt.html
-pub fn sqrt(x: f64) -> f64 {    
+// https://stackoverflow.com/questions/59081890/is-it-possible-to-write-quakes-fast-invsqrt-function-in-rust
+pub fn sqrt(x: f32) -> f32 {    
     let xhalf = 0.5 * x;
-    let mut i: u32 = x as u32;
+    
+    let mut i = x.to_bits();        
     i = 0x5f375a86 - (i>>1);
 
-    let mut xmut: f64 = f64::from_bits(i as u64);    
+    let mut xmut: f32 = f32::from_bits(i);    
     xmut = xmut * (1.5 - xhalf * xmut * xmut);
     xmut = xmut * (1.5 - xhalf * xmut * xmut);
     xmut = xmut * (1.5 - xhalf * xmut * xmut);
 
     1.0/xmut
 }
-
-// float InvSqrt(float x)
-// {
-// 	float xhalf = 0.5f*x;
-// 	int i = *(int*)&x; // get bits for floating VALUE 
-// 	i = 0x5f375a86- (i>>1); // gives initial guess y0
-// 	x = *(float*)&i; // convert bits BACK to float
-// 	x = x*(1.5f-xhalf*x*x); // Newton step, repeating increases accuracy
-// 	x = x*(1.5f-xhalf*x*x); // Newton step, repeating increases accuracy
-// 	x = x*(1.5f-xhalf*x*x); // Newton step, repeating increases accuracy
-
-// 	return 1/x;
-// }
 
 fn abs(x: f64) -> f64 {
     if x < 0.0 { -x } else { x }     
