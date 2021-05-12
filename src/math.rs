@@ -90,3 +90,29 @@ pub fn sqrt_bisection(x: f64) -> f64 {
 
     mid
 }
+
+pub fn log2(value: isize) -> i8 {
+    let table: [i8; 64] = 
+        [
+            63,  0, 58,  1, 59, 47, 53,  2,
+            60, 39, 48, 27, 54, 33, 42,  3,
+            61, 51, 37, 40, 49, 18, 28, 20,
+            55, 30, 34, 11, 43, 14, 22,  4,
+            62, 57, 46, 52, 38, 26, 32, 41,
+            50, 36, 17, 19, 29, 10, 13, 21,
+            56, 45, 25, 31, 35, 16,  9, 12,
+            44, 24, 15,  8, 23,  7,  6,  5
+        ];
+
+    let mut happy_value = value;
+    happy_value |= happy_value >> 1;
+    happy_value |= happy_value >> 2;
+    happy_value |= happy_value >> 4;
+    happy_value |= happy_value >> 8;
+    happy_value |= happy_value >> 16;
+    happy_value |= happy_value >> 32;
+
+    let idx = ((happy_value - (happy_value >> 1)) * 0x07EDD5E59A4E28C2) >> 58;
+
+    table[idx as usize]
+}
