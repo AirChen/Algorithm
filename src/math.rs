@@ -117,32 +117,55 @@ pub fn log2(value: isize) -> i8 {
     table[idx as usize]
 }
 
-int divide(int dividend, int divisor) {        
-    long x = dividend, y = divisor;
-    bool isNeg = false;
-    if ((x > 0 && y < 0) || (x < 0 && y > 0)) isNeg = true;
-    if (x < 0) x = -x;
-    if (y < 0) y = -y;
-    long l = 0, r = x;
-    while (l < r) {
-        long mid = l + r + 1 >> 1;
-        if (mul(mid, y) <= x) {
+pub fn divide(dividend: i32, divisor: i32) -> i64 {
+    let mut x = dividend;
+    let mut y = divisor;
+
+    let mut isNeg: bool = false;
+
+    if (x > 0 && y < 0) || (x < 0 && y > 0) {
+        isNeg = true;
+    }
+
+    if x < 0 {
+        x = -x;
+    }
+
+    if y < 0 {
+        y = -y;
+    }
+
+    let mut l = 0;
+    let mut r = x;
+
+    while l < r {
+        let mid = l + r + 1 >> 1;
+        if mul(mid, y) <= x as i64 {
             l = mid;
         } else {
             r = mid - 1;
         }
     }
-    long ans = isNeg ? -l : l;
-    if (ans > pow(2, 31)-1 || ans < 0 - pow(2, 31)) return pow(2, 31)-1;
-    return (int)ans;
+
+    let mut ans =  if isNeg {-l as i64} else {l as i64};
+    if ans > i64::MAX || ans < i64::MIN {
+        ans = i64::MAX;
+    }
+    ans
 }
 
-long mul(long a, long k) {
-    long ans = 0;
-    while (k > 0) {
-        if ((k & 1) == 1) ans += a;
-        k >>= 1;
-        a += a;
+pub fn mul(a: i32, k: i32) -> i64 {
+    let mut ans = 0;
+    let mut mula = a;
+    let mut mulk = k;
+
+    while mulk != 0 {
+        if (mulk & 1) == 1 {
+            ans += mula;
+        }
+        mula += mula;
+        mulk = mulk >> 1;
     }
-    return ans;
+
+    ans as i64
 }

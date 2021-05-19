@@ -9,6 +9,9 @@ use math::sqrt_newton;
 use math::sqrt_bisection;
 use math::log2;
 
+use math::divide;
+use math::mul;
+
 fn main() {
     let mut arr = [ 6, 5, 2, 7, 3, 9, 8, 4, 10, 1 ];
     Sort::quickSort(&mut arr);
@@ -30,4 +33,9 @@ fn main() {
 
     let l = 8;
     println!("log2({}) is {}", l, log2(l));
+
+    let a = 8;
+    let b = 2;
+    println!("divide({}, {}) is {}", a, b, divide(a, b));
+    println!("mul({}, {}) is {}", a, b, mul(a, b));
 }
